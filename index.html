@@ -68,7 +68,7 @@
         }
         document.getElementById("send").addEventListener("click",function(){
             var formData=new FormData(document.getElementById("requestForm"));
-            console.log(formData.params);
+            console.log(formData.get("url"));
             FB.api(formData.url, formData.method, JSON.parse(formData.params), function (res) {
                 jsonData.textContent = JSON.stringify(res, undefined, 2);
             });
