@@ -5,11 +5,21 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="https://pre00.deviantart.net/83cd/th/pre/f/2015/066/e/8/photobooth_custom_icon_by_emnnichols-d8kqiom.png">
     <title>Thanh's site</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
+
+    
     <script>
+        var additionalScript=[
+            "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+        ];
+        var docHead=document.head;
+        additionalScript.forEach((e)=>{
+            var newScript=document.createElement("script");
+            newScript.src=e;
+            docHead.appendChild(newScript);
+        });
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '1964271427147655',
