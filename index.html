@@ -8,6 +8,22 @@
 </head>
 
 <body>
+    <form id="requestForm">
+        <div>
+            <select name="method">
+                <option value="get">GET</option>
+                <option value="post">POST</option>
+                <option value="put">PUT</option>
+                <option value="delete">DELETE</option>
+                <option value="patch">PATCH</option>
+            </select>
+            <input type="text" name="url" placeholder="url" title="url">
+        </div>
+        <div>
+            <textarea name="params" id="params" cols="30" rows="10"></textarea>
+        </div>
+        <button id="send">Send</button>
+    </form>
     <pre id="jsonData"></pre>
     <script>
         window.fbAsyncInit = function () {
@@ -35,21 +51,27 @@
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-        var additionalScript=[
+        var additionalScript = [
             "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
         ];
-        var docHead=document.head;
-        additionalScript.forEach((e)=>{
-            var newScript=document.createElement("script");
-            newScript.src=e;
+        var docHead = document.head;
+        additionalScript.forEach((e) => {
+            var newScript = document.createElement("script");
+            newScript.src = e;
             docHead.appendChild(newScript);
         });
-        var jsonData=document.getElementById("jsonData");
+        var jsonData = document.getElementById("jsonData");
         function MyAction(loginInfomation) {
-            FB.api('/me', 'get', {fields: 'id,name'},function (res) {
-                jsonData.textContent=JSON.stringify(res,undefined,2);
+            FB.api('/me', 'get', { fields: 'id,name' }, function (res) {
+                jsonData.textContent = JSON.stringify(res, undefined, 2);
             });
         }
+        document.getElementById("send").addEventListener("click",function(){
+            var formData=new formData(document.getElementById("requestForm"));
+            FB.api(formData.url, formData.method, JSON.parse(formData.params), function (res) {
+                jsonData.textContent = JSON.stringify(res, undefined, 2);
+            });
+        });
     </script>
 </body>
 
