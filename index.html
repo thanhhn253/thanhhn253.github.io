@@ -65,10 +65,9 @@
         var jsonData = document.getElementById("jsonData");
         var requestForm = document.getElementById("requestForm");
         var btnSend = document.getElementById("send");
-        requestForm.onkeypress = function (e) {
-            if (e.keyCode == 13) {
-                btnSend.click();
-            }
+        requestForm.onsubmit = function (e) {
+            e.preventDefault();
+            btnSend.click();
         }
         function MyAction(loginInfomation) {
 
