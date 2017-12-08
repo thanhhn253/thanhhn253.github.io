@@ -68,8 +68,7 @@
         }
         document.getElementById("send").addEventListener("click",function(){
             var formData=new FormData(document.getElementById("requestForm"));
-            console.log(formData.get("url"));
-            FB.api(formData.url, formData.method, JSON.parse(formData.params), function (res) {
+            FB.api(formData.get("url"), formData.get("method"), JSON.parse(formData.get("params")), function (res) {
                 jsonData.textContent = JSON.stringify(res, undefined, 2);
             });
         });
