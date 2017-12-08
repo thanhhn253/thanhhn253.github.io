@@ -22,7 +22,7 @@
         <div>
             <textarea name="params" id="params" cols="30" rows="10"></textarea>
         </div>
-        <button id="send">Send</button>
+        <button id="send" type="button">Send</button>
     </form>
     <pre id="jsonData"></pre>
     <script>
@@ -61,12 +61,17 @@
             docHead.appendChild(newScript);
         });
         var jsonData = document.getElementById("jsonData");
-        function MyAction(loginInfomation) {
-            FB.api('/me', 'get', { fields: 'id,name' }, function (res) {
-                jsonData.textContent = JSON.stringify(res, undefined, 2);
-            });
+        var requestForm=document.getElementById("requestForm");
+        var btnSend=document.getElementById("send");
+        requestForm.onkeypress=function(e){
+            if (e.keyCode == 13){
+                btnSend.click();
+            }
         }
-        document.getElementById("send").addEventListener("click",function(){
+        function MyAction(loginInfomation) {
+            
+        }
+        btnSend.addEventListener("click",function(){
             var formData=new FormData(document.getElementById("requestForm"));
             FB.api(formData.get("url"), formData.get("method"), JSON.parse(formData.get("params")), function (res) {
                 jsonData.textContent = JSON.stringify(res, undefined, 2);
