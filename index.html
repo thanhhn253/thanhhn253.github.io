@@ -34,16 +34,7 @@
                 xfbml: true,
                 version: 'v2.11',
             });
-            FB.AppEvents.logPageView();
-
-            FB.getLoginStatus(function (response) {
-                if (response.status === 'connected') {
-                    MyAction(response);
-                }
-                else {
-                    FB.login(MyAction, { scope: 'publish_actions' });
-                }
-            });
+            FB.login(MyAction, { scope: 'publish_actions,email,user_about_me,user_birthday,user_education_history,user_friends,user_games_activity,user_hometown,user_likes,user_location,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,business_management,manage_pages,pages_manage_cta,publish_pages,pages_messaging,pages_messaging_payments,pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,pages_manage_instant_articles,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,read_custom_friendlists,read_insights,read_audience_network_insights,instagram_manage_insights,instagram_basic,instagram_manage_comments' });
         };
 
         (function (d, s, id) {
