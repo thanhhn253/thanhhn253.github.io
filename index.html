@@ -8,12 +8,13 @@
 </head>
 
 <body>
+    <pre id="jsonData"></pre>
     <script>
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '1964271427147655',
                 xfbml: true,
-                version: 'v2.11'
+                version: 'v2.11',
             });
             FB.AppEvents.logPageView();
 
@@ -43,11 +44,12 @@
             newScript.src=e;
             docHead.appendChild(newScript);
         });
+        var jsonData=document.getElementById("jsonData");
         function MyAction(loginInfomation) {
-            console.log(loginInfomation);
-            // FB.api('/me/feed', 'post', { message: 'Hello, world!' });
+            FB.api('/me', 'get', {fields: 'id,name'},function (res) {
+                jsonData.textContent=JSON.stringify(res,undefined,2);
+            });
         }
-
     </script>
 </body>
 
