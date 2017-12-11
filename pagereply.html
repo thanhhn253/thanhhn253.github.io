@@ -164,9 +164,12 @@
         var appToken="";
         function MyAction(loginInfomation) {
             console.log(loginInfomation);
-            FB.api(`/oauth/access_token?client_id=1964271427147655&client_secret=b9198d6be961b693b3b0b6983e9f9739&grant_type=client_credentials`, "get", {}, function (res1){
-                console.log(res1);
-            });
+            var xhr=new XMLHttpRequest();
+            xhr.open("get","https://graph.facebook.com/oauth/access_token?client_id=1964271427147655&client_secret=b9198d6be961b693b3b0b6983e9f9739&grant_type=client_credentials");
+            xhr.send();
+            xhr.onload=function(){
+                console.log(xhr.response);
+            }
             // if(pageId.value){
             //     FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {if (res.access_token) {pageToken = res.access_token;}});
             // }
