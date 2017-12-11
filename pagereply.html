@@ -63,16 +63,24 @@
                 jsonData.textContent += JSON.stringify(res, undefined, 2);
                 if (res.access_token) {
                     pageToken = res.access_token;
-                    FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
-                        jsonData.textContent += "\n" + JSON.stringify(res1, undefined, 2);
+                    FB.api(`/${pageId.value}?fields=conversations{senders,can_reply}?access_token=` + pageToken, "get", {}, function (res1) {
                         if (res1.data.length > 0) {
                             conversations = conversations.concat(res1.data);
-                            // if (res1.paging.next) {
-                            //     var stop = false;
-                            //     while (!stop) {
-                                    
-                            //     }
-                            // }
+                            if(res1.paging.next){
+                                var stop=false;
+                                var nextCUrl=res1.paging.next;
+                                while(!stop){
+                                    $.get(nextCUrl).done(function(nextC){
+                                        conversations= conversations.concat(nextC.data);
+                                        if(nextC.paging.next){
+                                            nextCUrl=nextC.paging.next;
+                                        }else{
+                                            stop=true;
+                                        }
+                                    });
+                                }
+                            }
+                            jsonData.textContent += JSON.stringify(conversations, undefined, 2);
                             conversations.forEach((e)=>{
                                 FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
                                     
