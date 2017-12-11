@@ -52,11 +52,11 @@
         var a = a.Distinc(true,"id");
 
         function f(a){
-            a=1;
+            a=a.concat([{id:1,name:"a"}]);
         }
-        var t=5;
-        f(t);
-        console.log(t);
+        var a=[{id:1,name:"a"}];
+        f(a);
+        console.log(a);
     </script>
 </body>
 

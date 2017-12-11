@@ -58,16 +58,6 @@
         var userList = document.getElementById('userList');
         var pageToken = "";
         var conversations = [];
-        function GetConversations(url) {
-            var rs = new Conversation();
-            $.get(url).done(function (res) {
-                rs.data=res.conversations.data;
-                if(res.conversations.paging.next){
-                    rs.nextUrl=res.conversations.paging.next;
-                }
-            });
-            return rs;
-        }
 
         checkPageForm.onsubmit = function (e) {
             e.preventDefault();
@@ -81,26 +71,24 @@
                             if (res1.conversations.paging.next) {
                                 var stop = false;
                                 var nextCUrl = res1.conversations.paging.next;
-                                // var nextConversation=GetConversations(nextCUrl);
-                                // conversations= conversations.concat(nextConversation.data);
-
-                                // while (!stop) {
-                                //     $.get(nextCUrl).done(function (nextC) {
-                                //         conversations = conversations.concat(nextC.conversations.data);
-                                //         if (nextC.conversations.paging.next) {
-                                //             nextCUrl = nextC.conversations.paging.next;
-                                //         } else {
-                                //             stop = true;
-                                //         }
-                                //     });
-                                // }
+                                while (!stop) {
+                                    $.get(nextCUrl).done(function (nextC) {
+                                        conversations = conversations.concat(nextC.conversations.data);
+                                        if (nextC.conversations.paging.next) {
+                                            nextCUrl = nextC.conversations.paging.next;
+                                        } else {
+                                            stop = true;
+                                        }
+                                    });
+                                }
                             }
-                            jsonData.textContent += JSON.stringify(conversations, undefined, 2);
-                            conversations.forEach((e) => {
-                                FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
+                            console.log(conversations);
+                            // jsonData.textContent += JSON.stringify(conversations, undefined, 2);
+                            // conversations.forEach((e) => {
+                            //     FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
 
-                                });
-                            });
+                            //     });
+                            // });
                         }
                     });
                 }
