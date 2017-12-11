@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a = [
+            {
+                id: 1,
+                name: "a"
+            },
+            {
+                id: 1,
+                name: "a"
+            },
+            {
+                id: 1,
+                name: "a"
+            },
+            {
+                id: 2,
+                name: "b"
+            },
+            {
+                id: 1,
+                name: "a"
+            }
+        ]
+        var b=["a","a","b","c","a"];
+        Array.prototype.Distinc = function (hasObjectElements, fieldToConpare) {
+            if (hasObjectElements) {
+                return this.filter(function (value, index, arr) {
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i][fieldToConpare] === value[fieldToConpare]) {
+                            return (i === index);
+                        }
+                    }
+                    return true;
+                });
+            }else{
+                return this.filter(function (value, index, arr) {
+                    return (arr.indexOf(value)===index);
+                });
+            }
+        }
+        var a = a.Distinc(true,"id");
+        console.log(b.Distinc(false));
+    </script>
+</body>
+
+</html>
