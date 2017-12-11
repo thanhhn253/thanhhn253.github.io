@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://pre00.deviantart.net/83cd/th/pre/f/2015/066/e/8/photobooth_custom_icon_by_emnnichols-d8kqiom.png">
+    <title>Thanh's site</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form id="checkPageForm">
+        <fieldset>
+            <legend>Check Page:</legend>
+            <label>
+                Page Id
+            </label>
+            <input type="text" id="pageId" value="139620730032935">
+            <input type="submit" value="Check">
+        </fieldset>
+    </form>
+    <form id="chooseUserForm">
+        <fieldset>
+            <legend>Choose User:</legend>
+            <div id="userList"></div>
+            <div>
+                <input type="submit" value="Process">
+            </div>
+        </fieldset>
+    </form>
+    <pre id="jsonData"></pre>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1964271427147655',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.11',
+            });
+            FB.login(MyAction, { scope: 'publish_actions,email,user_about_me,user_birthday,user_education_history,user_friends,user_games_activity,user_hometown,user_likes,user_location,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,business_management,manage_pages,pages_manage_cta,publish_pages,pages_messaging,pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,pages_manage_instant_articles,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,read_custom_friendlists,read_insights,read_audience_network_insights,instagram_manage_insights,instagram_basic,instagram_manage_comments' });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        function MyAction(loginInfomation) {
+
+        }
+        var jsonData = document.getElementById("jsonData");
+        var pageId = document.getElementById('pageId');
+        var checkPageForm = document.getElementById('checkPageForm');
+        var userList = document.getElementById('userList');
+        var pageToken = "";
+        var conversations = [];
+        checkPageForm.onsubmit = function (e) {
+            e.preventDefault();
+            FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {
+                jsonData.textContent += JSON.stringify(res, undefined, 2);
+                if (res.access_token) {
+                    pageToken = res.access_token;
+                    FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
+                        jsonData.textContent += "\n" + JSON.stringify(res1, undefined, 2);
+                        if (res1.data.length > 0) {
+                            conversations = conversations.concat(res1.data);
+                            // if (res1.paging.next) {
+                            //     var stop = false;
+                            //     while (!stop) {
+                                    
+                            //     }
+                            // }
+                            conversations.forEach((e)=>{
+                                FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
+                                    
+                                });
+                            });
+                        }
+                    });
+                }
+                else {
+                    jsonData.textContent += "Không lấy được page access token vui lòng kiểm tra lại quyền của user";
+                }
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>
