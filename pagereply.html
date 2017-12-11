@@ -8,25 +8,38 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/prototype.js"></script>
     <script src="/classes.js"></script>
+    <style>
+        label {
+            margin-right: 20px;
+        }
+
+        textarea {
+            width: 80%;
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
     <form id="checkPageForm">
         <fieldset>
-            <legend>Check Page:</legend>
+            <legend>Get user list:</legend>
             <label>
                 Page Id
             </label>
             <input type="text" id="pageId" value="139620730032935">
-            <input type="submit" value="Check">
+            <input type="submit" value="Get">
         </fieldset>
     </form>
-    <form id="chooseUserForm">
+    <form id="processForm">
         <fieldset>
-            <legend>Choose User:</legend>
+            <legend>Users and message:</legend>
             <div id="userList"></div>
             <div>
-                <input type="submit" value="Process">
+                <textarea name="message" id="message"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="Send">
             </div>
         </fieldset>
     </form>
@@ -52,50 +65,88 @@
         function MyAction(loginInfomation) {
 
         }
+
         var jsonData = document.getElementById("jsonData");
         var pageId = document.getElementById('pageId');
         var checkPageForm = document.getElementById('checkPageForm');
         var userList = document.getElementById('userList');
+        var processForm = document.getElementById('processForm');
         var pageToken = "";
         var conversations = [];
+        var message = document.getElementById('message');
+        function GetConversations(url, callback) {
+            FB.api(`/${pageId.value}?fields=conversations{senders,can_reply}&access_token=` + pageToken, "get", {}, function (res1) {
+                if (res1.conversations.data.length > 0) {
+                    conversations = conversations.concat(res1.conversations.data);
+                    if (res1.conversations.paging.next) {
+                        GetConversations(res1.conversations.paging.next, callback);
+                    }
+                    else {
+                        callback();
+                    }
+                } else {
+                    callback();
+                }
+            });
+        }
 
         checkPageForm.onsubmit = function (e) {
             e.preventDefault();
-            FB.api(`https://graph.facebook.com/v2.11/${pageId.value}?fields=access_token`, "get", {}, function (res) {
-                jsonData.textContent += JSON.stringify(res, undefined, 2);
+            FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {
                 if (res.access_token) {
                     pageToken = res.access_token;
-                    FB.api(`/${pageId.value}?fields=conversations{senders,can_reply}&access_token=` + pageToken, "get", {}, function (res1) {
-                        if (res1.conversations.data.length > 0) {
-                            conversations = conversations.concat(res1.conversations.data);
-                            if (res1.conversations.paging.next) {
-                                var stop = false;
-                                var nextCUrl = res1.conversations.paging.next;
-                                while (!stop) {
-                                    $.get(nextCUrl).done(function (nextC) {
-                                        conversations = conversations.concat(nextC.conversations.data);
-                                        if (nextC.conversations.paging.next) {
-                                            nextCUrl = nextC.conversations.paging.next;
-                                        } else {
-                                            stop = true;
-                                        }
-                                    });
+                    GetConversations(`/${pageId.value}?fields=conversations{senders,can_reply}&access_token=` + pageToken, function () {
+                        var senders = [];
+                        conversations.forEach((e) => {
+                            e.senders.data.forEach((s) => {
+                                if (s.id !== pageId.value) {
+                                    s.conversationId = e.id;
+                                    senders.push(s);
                                 }
-                            }
-                            console.log(conversations);
-                            // jsonData.textContent += JSON.stringify(conversations, undefined, 2);
-                            // conversations.forEach((e) => {
-                            //     FB.api(`/${pageId.value}/conversations?access_token=` + pageToken, "get", {}, function (res1) {
-
-                            //     });
-                            // });
-                        }
+                            });
+                        });
+                        senders.forEach((e) => {
+                            var c = document.createElement("input");
+                            c.type = "checkbox";
+                            c.value = e.conversationId;
+                            c.id = e.conversationId;
+                            c.setAttribute("userName",e.name);
+                            c.name = "selectedUsers";
+                            c.checked = true;
+                            var l = document.createElement("label");
+                            l.setAttribute("for", e.conversationId);
+                            l.textContent = e.name;
+                            var d = document.createElement("div");
+                            d.setAttribute("style", `display:inline-block`);
+                            d.appendChild(c);
+                            d.appendChild(l);
+                            userList.appendChild(d);
+                        });
                     });
                 }
                 else {
                     jsonData.textContent += "Không lấy được page access token vui lòng kiểm tra lại quyền của user";
                 }
             });
+        }
+
+        processForm.onsubmit = function (e) {
+            e.preventDefault();
+            var users=document.getElementsByName("selectedUsers");
+            jsonData.textContent="";
+            users.forEach((s)=>{
+                if(s.checked){
+                    FB.api(`/${s.value}/messages?access_token=${pageToken}`,"POST",{"message": message.value},function (response) 
+                        {
+                            if (response && !response.error) {
+                                jsonData.textContent+="Gửi thành công tới user "+s.getAttribute("userName");
+                            }
+                        }
+                    );
+                }
+                
+            });
+            
         }
 
 
