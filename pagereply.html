@@ -163,6 +163,7 @@
 
         var appToken="";
         function MyAction(loginInfomation) {
+            console.log(loginInfomation);
             FB.api(`/oauth/access_token?client_id=1964271427147655&client_secret=b9198d6be961b693b3b0b6983e9f9739&grant_type=client_credentials`, "get", {}, function (res1){
                 console.log(res1);
             });
