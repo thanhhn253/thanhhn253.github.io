@@ -64,7 +64,7 @@
                 if (res.access_token) {
                     pageToken = res.access_token;
                     FB.api(`/${pageId.value}?fields=conversations{senders,can_reply}?access_token=` + pageToken, "get", {}, function (res1) {
-                        if (res1.data.length > 0) {
+                        if (res1.data) {
                             conversations = conversations.concat(res1.data);
                             if(res1.paging.next){
                                 var stop=false;
