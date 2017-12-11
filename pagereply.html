@@ -115,6 +115,7 @@
                                 }
                             });
                         });
+                        userList.innerHTML="";
                         senders.forEach((e) => {
                             var c = document.createElement("input");
                             c.type = "checkbox";
@@ -148,7 +149,9 @@
                 xfbml: true,
                 version: 'v2.11',
             });
-            FB.login(function(){}, { scope: 'publish_actions,manage_pages,pages_manage_cta,publish_pages,pages_messaging,pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,read_page_mailboxes' });
+            FB.login(function(loginInfomation){
+                console.log(loginInfomation);
+            }, { scope: 'publish_actions,manage_pages,pages_manage_cta,publish_pages,pages_messaging,pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,read_page_mailboxes' });
         };
 
         (function (d, s, id) {
