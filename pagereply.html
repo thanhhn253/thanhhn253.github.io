@@ -150,8 +150,7 @@
                 xfbml: true,
                 version: 'v2.11',
             });
-            FB.login(function(loginInfomation){
-            }, { scope: 'publish_actions,manage_pages,pages_manage_cta,publish_pages,pages_messaging,pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,read_page_mailboxes' });
+            FB.login(MyAction, { scope: 'publish_actions,manage_pages,pages_manage_cta,publish_pages,pages_messaging,pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,read_page_mailboxes' });
         };
 
         (function (d, s, id) {
@@ -162,9 +161,9 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
         function MyAction(loginInfomation) {
-            if(pageId.value){
-                FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {if (res.access_token) {pageToken = res.access_token;}});
-            }
+            // if(pageId.value){
+            //     FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {if (res.access_token) {pageToken = res.access_token;}});
+            // }
         }
         
         messageCount.max=maxMessage;
