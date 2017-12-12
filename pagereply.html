@@ -104,7 +104,6 @@
         checkPageForm.onsubmit = function (e) {
             e.preventDefault();
             FB.api(`/${pageId.value}?fields=access_token&access_token=`+userAccessToken, "get", {}, function (res) {
-                console.log(res);
                 if (res.access_token) {
                     pageToken = res.access_token;
                     conversations=[];
