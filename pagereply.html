@@ -108,6 +108,7 @@
                     pageToken = res.access_token;
                     conversations=[];
                     GetConversations(`/${pageId.value}?fields=conversations{senders,can_reply}&access_token=` + pageToken, function () {
+                        console.log(conversations);
                         var senders = [];
                         conversations.forEach((e) => {
                             e.senders.data.forEach((s) => {
