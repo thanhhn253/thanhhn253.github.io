@@ -168,7 +168,7 @@
             xhr.open("get","https://graph.facebook.com/oauth/access_token?client_id=1964271427147655&client_secret=b9198d6be961b693b3b0b6983e9f9739&grant_type=client_credentials");
             xhr.send();
             xhr.onload=function(){
-                console.log(xhr.response.access_token);
+                console.log(JSON.parse(xhr.response).access_token);
             }
             // if(pageId.value){
             //     FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {if (res.access_token) {pageToken = res.access_token;}});
