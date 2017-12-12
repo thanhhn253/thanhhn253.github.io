@@ -108,15 +108,16 @@
                     pageToken = res.access_token;
                     conversations=[];
                     GetConversations(`/${pageId.value}?fields=conversations{senders,can_reply}&access_token=` + pageToken, function () {
-                        console.log(conversations);
                         var senders = [];
                         conversations.forEach((e) => {
-                            e.senders.data.forEach((s) => {
-                                if (s.id !== pageId.value) {
-                                    s.conversationId = e.id;
-                                    senders.push(s);
-                                }
-                            });
+                            if (e.can_reply) {
+                                e.senders.data.forEach((s) => {
+                                    if (s.id !== pageId.value) {
+                                        s.conversationId = e.id;
+                                        senders.push(s);
+                                    }
+                                });
+                            }
                         });
                         userList.innerHTML="";
                         senders.forEach((e) => {
