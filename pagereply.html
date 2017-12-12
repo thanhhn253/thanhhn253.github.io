@@ -175,7 +175,7 @@
         
         messageCount.max=maxMessage;
         function GetConversations(url, callback) {
-            FB.api(`/${pageId.value}?fields=conversations{senders,can_reply}&access_token=` + pageToken, "get", {}, function (res1) {
+            FB.api(url, "get", {}, function (res1) {
                 if (res1.conversations.data.length > 0) {
                     conversations = conversations.concat(res1.conversations.data);
                     if (res1.conversations.paging.next) {
