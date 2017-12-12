@@ -161,14 +161,13 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        var appToken="";
         function MyAction(loginInfomation) {
             console.log(loginInfomation.authResponse.accessToken);
             var xhr1=new XMLHttpRequest();
             xhr1.open("get",`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=1964271427147655&client_secret=b9198d6be961b693b3b0b6983e9f9739&fb_exchange_token=${loginInfomation.authResponse.accessToken}`);
             xhr1.send();
             xhr1.onload=function(){
-                console.log(JSON.parse(xhr1.response));
+                console.log(JSON.parse(xhr1.response).access_token);
             }
             // if(pageId.value){
             //     FB.api(`/${pageId.value}?fields=access_token`, "get", {}, function (res) {if (res.access_token) {pageToken = res.access_token;}});
