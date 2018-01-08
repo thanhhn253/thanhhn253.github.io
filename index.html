@@ -12,11 +12,16 @@
             right: 20px;
         }
     </style>
+    <script src="https://wchat.freshchat.com/js/widget.js"></script>
 </head>
 
 <body>
-        <span class="skype-button rectangle" data-contact-id="thanhhn253@gmail.com" data-text="Contact me" id="contactMeBtn"></span>
-<script src="https://swc.cdn.skype.com/sdk/v1/sdk.min.js"></script>
+    <script>
+        window.fcWidget.init({
+          token: "13d4a5a3-c301-4dc4-8358-6871e1df9856",
+          host: "https://wchat.freshchat.com"
+        });
+      </script>
 </body>
 
 </html>
