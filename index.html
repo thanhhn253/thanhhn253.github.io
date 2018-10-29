@@ -10,7 +10,7 @@
 
 <body>
     <script>
-        var a=JSON.stringify({
+        var data = JSON.stringify({
             "type": 2,
             "start_time": "2018-10-29T18:20:00+07:00",
             "timezone": "VN",
@@ -19,11 +19,19 @@
                 "approval_type": 0
             }
         });
-        console.log(a);
-        var x=new XMLHttpRequest();
-        x.open("POST","https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
-        x.setRequestHeader("Content-Type","application/json");
-        x.send(a);
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(data);
     </script>
 </body>
 
