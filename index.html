@@ -3,25 +3,29 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="https://pre00.deviantart.net/83cd/th/pre/f/2015/066/e/8/photobooth_custom_icon_by_emnnichols-d8kqiom.png">
-    <title>Thanh's site</title>
-    <style>
-        #contactMeBtn{
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-        }
-    </style>
-    <script src="https://wchat.freshchat.com/js/widget.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="libs/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
     <script>
-        window.fcWidget.init({
-          token: "13d4a5a3-c301-4dc4-8358-6871e1df9856",
-          host: "https://wchat.freshchat.com"
+        var a=JSON.stringify({
+            "type": 2,
+            "start_time": "2018-10-29T18:20:00+07:00",
+            "timezone": "VN",
+            "settings": {
+                "join_before_host": true,
+                "approval_type": 0
+            }
         });
-      </script>
+        console.log(a);
+        var x=new XMLHttpRequest();
+        x.open("POST","https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
+        x.setRequestHeader("Content-Type","application/json");
+        x.send(a);
+    </script>
 </body>
 
 </html>
