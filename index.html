@@ -6,32 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <script>
-        var data = JSON.stringify({
-            "type": 2,
-            "start_time": "2018-10-29T18:20:00+07:00",
-            "timezone": "VN",
-            "settings": {
-                "join_before_host": true,
-                "approval_type": 0
-            }
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM",
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache",
+                "Postman-Token": "c8d52b9d-66db-4d7b-92d8-023324fdf931"
+            },
+            "processData": false,
+            "data": "{\"type\":2,\"start_time\":\"2018-10-29T18:20:00+07:00\",\"timezone\":\"VN\",\"settings\":{\"join_before_host\":true,\"approval_type\":0}}"
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
         });
-
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open("POST", "https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(data);
     </script>
 </body>
 
