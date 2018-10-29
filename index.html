@@ -31,10 +31,8 @@
             }
         });
 
-        xhr.open("POST", "https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
-        xhr.send(data);
+        xhr.open("GET", "https://api.zoom.us/v2/users/qkHyjzdvSaiVTjTzM5tPrA/meetings?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxWk5meEtOVFRvcTFxTDNMdTRKT0RBIiwiZXhwIjoxNDk2MDkxOTY0MDAwMDB9.hVuqGf6D-c2v67O0NuVPk6vO7DEgBJAmFL_lgscf1EM");
+        xhr.send();
     </script>
 </body>
 
