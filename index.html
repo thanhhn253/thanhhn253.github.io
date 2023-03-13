@@ -7,6 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="thanh://abc">Click me</a>
+    <div id="a"></div>
+    <script>
+        var a = document.getElementById("a");
+        (async ()=>{
+            try {
+                var audio = new Audio("https://file-examples.com/storage/fe137d1f80640cf1e98d9f6/2017/11/file_example_MP3_5MG.mp3");
+                await audio.play();
+            } catch (error) {
+                a.textContent = error.message;
+            }
+        })();
+    </script>
 </body>
 </html>
